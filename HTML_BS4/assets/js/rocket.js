@@ -39,12 +39,12 @@ let totalPriceElevator= document.querySelector("#elevator-total-price-input")
 let installationCost = document.querySelector("#installation-fees-input")
 let finalPrice = document.querySelector("#final-price-input")
 
-// function toFixed(){
-//     let formattedUnitPriceElevator = priceElevator.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") +  "$";
-//     let formattedTotalPriceElevators = totalPriceElevator.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " $";
-//     let formattedInstallationFees = installationCost.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " $";
-//     let formattedFinalPrice = finalPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " $";
-// }
+function toFixed(){
+    let formattedUnitPriceElevator = priceElevator.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") +  "$";
+    let formattedTotalPriceElevators = totalPriceElevator.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " $";
+    let formattedInstallationFees = installationCost.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " $";
+    let formattedFinalPrice = finalPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " $";
+}
 
 var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
