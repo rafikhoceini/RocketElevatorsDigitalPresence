@@ -39,25 +39,37 @@ let totalPriceElevator= document.querySelector("#elevator-total-price-input")
 let installationCost = document.querySelector("#installation-fees-input")
 let finalPrice = document.querySelector("#final-price-input")
 
-function toFixed(){
-    let formattedUnitPriceElevator = priceElevator.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") +  "$";
-    let formattedTotalPriceElevators = totalPriceElevator.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " $";
-    let formattedInstallationFees = installationCost.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " $";
-    let formattedFinalPrice = finalPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " $";
-}
+var priceElevatorValue = document.querySelector("#elevator-unit-price-input").value
+var totalPriceElevatorValue= document.querySelector("#elevator-total-price-input").value
+var installationCostValue = document.querySelector("#installation-fees-input").value
+var finalPriceValue = document.querySelector("#final-price-input").value
+
+var totalElevatorPricecalculate
+var installationPriceCalculate
+var unitPricePercentage
+
+// function toFixed(){
+//     let formattedUnitPriceElevator = priceElevator.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") +  "$";
+//     let formattedTotalPriceElevators = totalPriceElevator.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " $";
+//     let formattedInstallationFees = installationCost.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " $";
+//     let formattedFinalPrice = finalPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " $";
+// }
 
 var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   
-    // These options are needed to round to whole numbers if that's what you want.
-    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+    
   });
-
-  formatter.format(priceElevator.value);
-  formatter.format(totalPriceElevator.value);
-
+// var one = parseFloat(totalPriceElevator.value)
+// formatter.format(one)
+// console.log(  one)
+//  function rafik(){
+//   let one = parseFloat(priceElevator.value)
+//   formatter.format(one);
+//   formatter.format(totalPriceElevator.value);
+// //   console.log(elevAmountInput)
+//  }
 numApartments.hide();
 numFloors.hide();
 numBasements.hide();
@@ -200,42 +212,50 @@ let columns = Math.ceil(stories/20)
 let elevatorPerColumns= Math.ceil(elevatorRequired/columns)
 let totalElevators = (elevatorPerColumns*columns)
 elevAmountInput.value= totalElevators 
-console.log(elevatorPerColumns)
+
 
 }
 function totalPriceElevators(){
-    let x= priceElevator.value
-    let y= elevAmountInput.value
-  
-      totalPriceElevator.value = (x)*(y)
+    let x= parseFloat(unitPricePercentage)
+    let y= parseFloat(elevAmountInput.value)
+    totalElevatorPricecalculate = x*y
+
+      totalPriceElevator.value = formatter.format(totalElevatorPricecalculate)
+      formatter.format( totalPriceElevator.value)
   }
 
   function installationcost(){
-      let x= totalPriceElevator.value
+      
       
       
         if(standard.checked == true){
-            installationCost.value= x*0.1
+            installationPriceCalculate = totalElevatorPricecalculate*0.1
+            installationCost.value= formatter.format(installationPriceCalculate)
         }
     
     
         if(premium.checked == true){
-            installationCost.value= x*0.13
+            installationPriceCalculate = totalElevatorPricecalculate*0.13
+            installationCost.value= formatter.format(installationPriceCalculate)
+
+           
+
             
         }
     
     
         if(excelium.checked == true){
-            installationCost.value= x*0.16
+            installationPriceCalculate = totalElevatorPricecalculate*0.16
+            installationCost.value= formatter.format(installationPriceCalculate)
         }
         
     
       }
 
       function totalPrice(){
-       let x = parseFloat(installationCost.value)
-       let y= parseFloat(totalPriceElevator.value)
-       finalPrice.value= x+y
+       let x = installationPriceCalculate
+       let y= totalElevatorPricecalculate
+       finalPrice.value= formatter.format(x+y)
       }
 
   
@@ -314,7 +334,8 @@ maxOccu.addEventListener('input', (e) => {
 
 standard.addEventListener('change',(e)=>{
     if(standard.checked == true){
-        priceElevator.value = 7565
+        unitPricePercentage = 7565
+        priceElevator.value = formatter.format(unitPricePercentage)
         totalPriceElevators();
         installationcost();
         totalPrice();
@@ -323,7 +344,8 @@ standard.addEventListener('change',(e)=>{
 
 premium.addEventListener('change',(e)=>{
     if(premium.checked == true){
-        priceElevator.value = 12345
+        unitPricePercentage = 12345
+        priceElevator.value = formatter.format(unitPricePercentage)
         totalPriceElevators();
         installationcost();
         totalPrice();
@@ -334,7 +356,8 @@ premium.addEventListener('change',(e)=>{
 
 excelium.addEventListener('change',(e)=>{
     if(excelium.checked == true){
-        priceElevator.value = 15400
+        unitPricePercentage = 15400
+        priceElevator.value = formatter.format(unitPricePercentage)
         totalPriceElevators();
         installationcost();
         totalPrice();
